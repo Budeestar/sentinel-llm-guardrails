@@ -1,5 +1,8 @@
 # sentinel-llm-guardrails
 
+[![ci](https://github.com/Budeestar/sentinel-llm-guardrails/actions/workflows/ci.yml/badge.svg)](https://github.com/Budeestar/sentinel-llm-guardrails/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 **Hardened, dependency-free OWASP LLM Top 10 guardrails (MIT).**
 
 Stdlib only. Layered detection:
@@ -51,10 +54,24 @@ python -m sentinel_llm_guardrails --json "How do I enable ASLR?"
 python -m sentinel_llm_guardrails --output "My system prompt is secret"
 ```
 
+## Examples
+
+| File | Purpose |
+|---|---|
+| [`examples/quickstart.py`](examples/quickstart.py) | Minimal Python drop-in |
+| [`examples/fastapi_middleware.py`](examples/fastapi_middleware.py) | FastAPI `/chat` guard |
+
+## Docs
+
+- [`SECURITY.md`](SECURITY.md) — report bypasses privately  
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — PR rules (stdlib-only)  
+- [`ADOPTION_TEST.md`](ADOPTION_TEST.md) — why this repo is public  
+- [`CHANGELOG.md`](CHANGELOG.md)
+
 ## Why this exists
 
-Independent viability assessment: validate demand with a free module before
-packaging a full security product. See [`ADOPTION_TEST.md`](ADOPTION_TEST.md).
+Validate demand with a free module before packaging a larger security product.
+Stars from friends do not count — issues/forks from strangers do.
 
 ## Develop
 
