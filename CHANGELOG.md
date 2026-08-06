@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0] — 2026-08-05
+
+### Added
+- Latency budgets with warn / fail_open / fail_closed breach policies.
+- Per-tenant, append-only, hash-chained JSONL audit trail.
+- Prompt digests and HMAC tamper verification instead of storing raw prompts.
+- `sentinel_llm_guardrails.telemetry` module (stdlib only).
+
 ## [0.2.0] — 2026-08-01
 
 ### Added

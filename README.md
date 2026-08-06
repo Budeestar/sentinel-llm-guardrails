@@ -12,7 +12,8 @@ Stdlib only. Layered detection:
 3. **Heuristic risk score** — phrase-aware scoring with configurable threshold  
 4. **Secret redaction** — SSN, Luhn cards, AWS/GitHub/Slack/Stripe/OpenAI keys, JWT, private keys  
 5. **Output checks** — block PII in model replies; warn on prompt-leak phrasing  
-6. **Optional OPA/Rego** — `policies/llm-security.rego`
+6. **Latency budgets + per-tenant audit trails** — per-stage wall-clock budget with explicit breach policy; tamper-evident, prompt-digest audit logs  
+7. **Optional OPA/Rego** — `policies/llm-security.rego`
 
 > Not a commercial LLM firewall. Not a trained classifier. A small, auditable core you can read and embed.
 
@@ -44,6 +45,21 @@ prompt = inp.redacted_input or user_text
 out = g.check_output(model_text)
 if not out.allowed:
     raise PermissionError(out.blocked_reason)
+```
+
+## Telemetry
+
+Track request latency and keep a tamper-evident, per-tenant audit trail (stdlib only, no extra deps):
+
+```python
+from sentinel_llm_guardrails import LatencyBudget, LatencyStats, get_audit_trail
+
+with LatencyBudget(total_budget_ms=50, stats=LatencyStats()).stage("check_input"):
+    # ... your guardrail call ...
+    pass
+
+trail = get_audit_trail()
+trail.append(tenant_id="acme", prompt_digest="sha256-...", allowed=True, reasons=["clean"])
 ```
 
 ## CLI

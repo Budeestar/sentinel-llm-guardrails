@@ -12,8 +12,19 @@ from .guardrails import (
     _luhn_ok,
     normalize_for_detection,
 )
+from .telemetry import (
+    AUDIT_ENABLED,
+    DEFAULT_BREACH_POLICY,
+    DEFAULT_TOTAL_BUDGET_MS,
+    LATENCY_STATS,
+    LatencyBudget,
+    LatencyStats,
+    TenantAuditTrail,
+    get_audit_trail,
+    safe_tenant_id,
+)
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __all__ = [
     "GuardrailResult",
     "HeuristicInjectionScorer",
@@ -26,4 +37,13 @@ __all__ = [
     "_luhn_ok",
     "_credit_card_match",
     "__version__",
+    "AUDIT_ENABLED",
+    "DEFAULT_BREACH_POLICY",
+    "DEFAULT_TOTAL_BUDGET_MS",
+    "LATENCY_STATS",
+    "LatencyBudget",
+    "LatencyStats",
+    "TenantAuditTrail",
+    "get_audit_trail",
+    "safe_tenant_id",
 ]
