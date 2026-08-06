@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sentinel-llm-guardrails"
-version = "0.3.0"
+version = "0.3.1"
 description = "Hardened OWASP LLM Top 10 guardrails: evasion-resistant injection checks, secret redaction, rate limits, latency budgets and per-tenant audit trails. Stdlib only."
 readme = "README.md"
 license = { text = "MIT" }

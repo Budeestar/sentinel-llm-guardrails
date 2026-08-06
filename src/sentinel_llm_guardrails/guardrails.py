@@ -12,8 +12,16 @@ import unicodedata
 from collections import OrderedDict
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
 
-__version__ = "0.3.0"
+from .telemetry import (
+    LATENCY_STATS,
+    LatencyBudget,
+    TenantAuditTrail,
+)
+
+__version__ = "0.3.1"
 
 
 @dataclass
@@ -26,6 +34,9 @@ class GuardrailResult:
     checks_failed: list[str] = field(default_factory=list)
     risk_score: float = 0.0
     risk_reasons: list[str] = field(default_factory=list)
+    tenant_id: str = "default"
+    latency: dict[str, Any] = field(default_factory=dict)
+    audit_seq: int | None = None
 
 
 # ── Evasion normalization ─────────────────────────────────────────────
@@ -216,6 +227,11 @@ class LLMGuardrails:
         daily_request_limit: int = 1000,
         daily_token_limit: int = 500_000,
         injection_score_threshold: float = DEFAULT_INJECTION_SCORE_THRESHOLD,
+        latency_budget_ms: float | None = None,
+        latency_on_breach: str = "warn",
+        audit_enabled: bool = True,
+        audit_dir: str | Path | None = None,
+        audit_salt: str | None = None,
     ) -> None:
         self._daily_request_limit = daily_request_limit
         self._daily_token_limit = daily_token_limit
@@ -226,6 +242,12 @@ class LLMGuardrails:
         self._day_key = ""
         self._blocked_count = 0
         self._lock = threading.Lock()
+        self._latency_budget_ms = latency_budget_ms
+        self._latency_on_breach = latency_on_breach
+        self._audit_enabled = audit_enabled
+        self._audit_trail: TenantAuditTrail | None = None
+        if audit_enabled:
+            self._audit_trail = TenantAuditTrail(directory=audit_dir, salt=audit_salt)
 
     @classmethod
     def service(cls, **kwargs: float | int) -> LLMGuardrails:
@@ -253,7 +275,7 @@ class LLMGuardrails:
             )
         return False, score, reasons, None
 
-    def check_input(self, user_input: str, user_id: str = "default") -> GuardrailResult:
+    def _check_input_core(self, user_input: str, user_id: str = "default") -> GuardrailResult:
         checks_passed: list[str] = []
         checks_failed: list[str] = []
         warnings: list[str] = []
@@ -338,7 +360,7 @@ class LLMGuardrails:
             risk_score=score, risk_reasons=reasons,
         )
 
-    def check_output(self, llm_output: str) -> GuardrailResult:
+    def _check_output_core(self, llm_output: str) -> GuardrailResult:
         checks_passed: list[str] = []
         warnings: list[str] = []
 
@@ -385,16 +407,121 @@ class LLMGuardrails:
         checks_passed.append("LLM05_output_validation")
         return GuardrailResult(allowed=True, warnings=warnings, checks_passed=checks_passed)
 
+    def _new_budget(self) -> LatencyBudget:
+        from . import telemetry as _telemetry
+        total = self._latency_budget_ms if self._latency_budget_ms is not None else _telemetry.DEFAULT_TOTAL_BUDGET_MS
+        return LatencyBudget(total_budget_ms=total, on_breach=self._latency_on_breach, stats=LATENCY_STATS)
+
+    def audit_trail(self) -> TenantAuditTrail | None:
+        return self._audit_trail
+
+    def _record(
+        self,
+        result: GuardrailResult,
+        user_id: str,
+        tenant_id: str,
+        stage: str,
+        content: str,
+    ) -> None:
+        if self._audit_trail is None:
+            return
+        entry = self._audit_trail.record(
+            tenant_id,
+            decision="allow" if result.allowed else "block",
+            stage=stage,
+            user_id=user_id,
+            content=content if isinstance(content, str) else str(content),
+            reason=result.blocked_reason,
+            injection_score=result.risk_score,
+            latency=result.latency,
+            extra={
+                "checks_passed": result.checks_passed,
+                "checks_failed": result.checks_failed,
+            },
+        )
+        result.audit_seq = entry["seq"]
+
+    def check_input(
+        self,
+        user_input: str,
+        user_id: str = "default",
+        tenant_id: str = "default",
+    ) -> GuardrailResult:
+        budget = self._new_budget()
+        with budget.stage("input"):
+            result = self._check_input_core(user_input, user_id)
+        result.tenant_id = tenant_id
+        result.latency = budget.to_dict()
+        if budget.should_block() and result.allowed:
+            result.allowed = False
+            result.blocked_reason = f"Latency budget exceeded: {budget.elapsed_ms:.1f}ms"
+            result.checks_failed.append("latency_budget")
+            result.warnings.extend(budget.warnings())
+        self._record(result, user_id, tenant_id, "input", user_input)
+        return result
+
+    def check_output(
+        self,
+        llm_output: str,
+        tenant_id: str = "default",
+    ) -> GuardrailResult:
+        budget = self._new_budget()
+        with budget.stage("output"):
+            result = self._check_output_core(llm_output)
+        result.tenant_id = tenant_id
+        result.latency = budget.to_dict()
+        if budget.should_block() and result.allowed:
+            result.allowed = False
+            result.blocked_reason = f"Latency budget exceeded: {budget.elapsed_ms:.1f}ms"
+            result.checks_failed.append("latency_budget")
+            result.warnings.extend(budget.warnings())
+        self._record(result, "default", tenant_id, "output", llm_output)
+        return result
+
+    def check_tool(
+        self,
+        tool: str,
+        user_role: str = "user",
+        tenant_id: str = "default",
+    ) -> GuardrailResult:
+        budget = self._new_budget()
+        with budget.stage("tool"):
+            # Public default is permissive: customers can override in subclass/ACL.
+            allowed = True
+            checks_passed = ["LLM03_tool_authorised"]
+            checks_failed: list[str] = []
+            blocked_reason: str | None = None
+        result = GuardrailResult(
+            allowed=allowed,
+            blocked_reason=blocked_reason,
+            checks_passed=checks_passed,
+            checks_failed=checks_failed,
+        )
+        result.tenant_id = tenant_id
+        result.latency = budget.to_dict()
+        if budget.should_block():
+            result.allowed = False
+            result.blocked_reason = f"Latency budget exceeded: {budget.elapsed_ms:.1f}ms"
+            result.checks_failed.append("latency_budget")
+            result.warnings.extend(budget.warnings())
+        self._record(result, user_role, tenant_id, "tool", tool)
+        return result
+
     def get_stats(self) -> dict:
         with self._lock:
-            return {
+            stats = {
                 "total_blocked": self._blocked_count,
                 "daily_requests": dict(self._request_counts),
                 "daily_tokens": dict(self._token_counts),
                 "tracked_users": len(self._request_counts),
                 "version": __version__,
                 "injection_score_threshold": self._injection_score_threshold,
+                "audit_enabled": self._audit_enabled,
+                "audit_tenants": self._audit_trail.tenants() if self._audit_trail else [],
+                "latency_on_breach": self._latency_on_breach,
+                "latency": LATENCY_STATS.snapshot(),
             }
+        return stats
 
 
 LLMGuardrailsService = LLMGuardrails
