@@ -1,5 +1,4 @@
 # LLM Security Policies (OPA/Rego)
-# Extracted from SentinelOS / FORTRESS lineage for open use
 #
 # Enforces OWASP LLM Top 10 controls and EU AI Act requirements
 # for all AI/LLM interactions.

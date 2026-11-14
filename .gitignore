@@ -8,3 +8,13 @@ build/
 .venv/
 venv/
 .DS_Store
+
+# third-party benchmark datasets (download with benchmarks/download_datasets.py)
+benchmarks/data/
+benchmarks/data_benign/
+
+# local-only: prompt drafts and samples that quote third-party dataset rows
+benchmarks/PROMPT_*.md
+benchmarks/results/**/*sample*.jsonl
+benchmarks/results/*sample*.jsonl
+__pycache__/

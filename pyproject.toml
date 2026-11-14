@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sentinel-llm-guardrails"
-version = "0.3.1"
-description = "Hardened OWASP LLM Top 10 guardrails: evasion-resistant injection checks, secret redaction, rate limits, latency budgets and per-tenant audit trails. Stdlib only."
+version = "0.4.0"
+description = "Hardened OWASP LLM Top 10 guardrails: evasion-resistant injection checks, a stdlib-only learned prompt-injection classifier, secret redaction, rate limits, latency budgets and per-tenant audit trails. Stdlib only."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"
@@ -33,6 +33,9 @@ Repository = "https://github.com/Budeestar/sentinel-llm-guardrails"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+sentinel_llm_guardrails = ["models/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

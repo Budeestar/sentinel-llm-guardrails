@@ -1,4 +1,4 @@
-# SentinelOS — LLM Security Policy Tests
+# sentinel-llm-guardrails — LLM Security Policy Tests
 package sentinel.llm_security
 
 import future.keywords.if

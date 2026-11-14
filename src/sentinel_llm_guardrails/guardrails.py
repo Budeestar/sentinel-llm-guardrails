@@ -21,7 +21,7 @@ from .telemetry import (
     TenantAuditTrail,
 )
 
-__version__ = "0.3.1"
+__version__ = "0.4.0"
 
 
 @dataclass
@@ -232,6 +232,9 @@ class LLMGuardrails:
         audit_enabled: bool = True,
         audit_dir: str | Path | None = None,
         audit_salt: str | None = None,
+        use_classifier: bool = True,
+        classifier_threshold: float | None = None,
+        classifier: Any = None,
     ) -> None:
         self._daily_request_limit = daily_request_limit
         self._daily_token_limit = daily_token_limit
@@ -246,12 +249,36 @@ class LLMGuardrails:
         self._latency_on_breach = latency_on_breach
         self._audit_enabled = audit_enabled
         self._audit_trail: TenantAuditTrail | None = None
+        # Learned classifier — resolved lazily on first use so that
+        # `use_classifier=False` (and regex-only deployments) never touch it.
+        self._use_classifier = use_classifier
+        self._classifier_threshold_override = classifier_threshold
+        # `classifier` lets callers supply their own InjectionClassifier (e.g. one
+        # retrained on their traffic); None means the packaged default model.
+        self._classifier_model: Any = classifier
+        self._classifier_resolved = classifier is not None
         if audit_enabled:
             self._audit_trail = TenantAuditTrail(directory=audit_dir, salt=audit_salt)
 
     @classmethod
     def service(cls, **kwargs: float | int) -> LLMGuardrails:
         return cls(**kwargs)  # type: ignore[arg-type]
+
+    def _get_classifier(self) -> Any:
+        """Return the loaded classifier, or ``None`` when unavailable/disabled.
+
+        Loading is lazy and cached: a missing or corrupt model file degrades
+        silently to the regex + heuristic stack (a single warning is emitted by
+        :mod:`sentinel_llm_guardrails.classifier`).
+        """
+        if not self._use_classifier:
+            return None
+        if not self._classifier_resolved:
+            from .classifier import InjectionClassifier  # local: keeps import cost lazy
+
+            self._classifier_model = InjectionClassifier.default()
+            self._classifier_resolved = True
+        return self._classifier_model
 
     def _touch_user(self, table: OrderedDict[str, int], user_id: str) -> int:
         if user_id in table:
@@ -268,6 +295,27 @@ class LLMGuardrails:
         for pattern in INJECTION_PATTERNS:
             if pattern.search(text) or pattern.search(norm) or pattern.search(folded):
                 return True, 1.0, ["regex_injection"], "Prompt injection detected (OWASP LLM01)"
+
+        # Learned classifier: runs only when the model is present. A sub-threshold
+        # score deliberately falls through to the heuristic scorer below, so the
+        # pre-existing behaviour is never lost.
+        model = self._get_classifier()
+        if model is not None:
+            threshold = self._classifier_threshold_override
+            if threshold is None:
+                threshold = float(getattr(model, "threshold", 0.5) or 0.5)
+            try:
+                probability = float(model.predict_proba(text))
+            except Exception:  # noqa: BLE001 - a guardrail must never crash
+                probability = None
+            if probability is not None and probability >= threshold:
+                return (
+                    True,
+                    probability,
+                    ["classifier"],
+                    f"Prompt injection classifier p={probability:.2f} >= {threshold:.2f}",
+                )
+
         score, reasons = self._scorer.score(text)
         if score >= self._injection_score_threshold:
             return True, score, reasons, (

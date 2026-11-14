@@ -1,10 +1,9 @@
 """
 LLM guardrail telemetry — latency budgets + per-tenant audit trails.
 
-The independent viability assessment (1 Aug 2026) noted that competing LLM
-security offerings had moved past regex matching to "classifier-based
-detection, latency budgets, and per-tenant audit trails". Detection scoring
-lives in ``llm_guardrails``; this module supplies the other two:
+Production LLM guardrails need more than pattern matching: classifier-based
+detection, latency budgets and per-tenant audit trails. Detection scoring
+lives in ``guardrails``/``classifier``; this module supplies the other two:
 
 * :class:`LatencyBudget` — per-stage wall-clock budget with an explicit
   breach policy (``warn`` / ``fail_open`` / ``fail_closed``). An inline

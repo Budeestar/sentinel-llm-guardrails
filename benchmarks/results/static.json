@@ -1,0 +1,676 @@
+{
+  "benchmark": "sentinel-llm-guardrails static prompt-injection detection benchmark",
+  "library_version": "0.4.0",
+  "run_date_utc": "2026-11-10T06:27:59Z",
+  "split": "test",
+  "seed": 0,
+  "threshold": 0.45,
+  "classifier_enabled": true,
+  "primary_configuration": "with_classifier",
+  "threshold_sweep_values": [
+    0.25,
+    0.35,
+    0.45,
+    0.55,
+    0.65
+  ],
+  "max_text_chars": 32000,
+  "flagging_rule": "flagged iff \"LLM01_prompt_injection\" in result.checks_failed",
+  "other_block_rule": "any other entry in checks_failed is recorded as other_block, never as a detection",
+  "data_dir": "benchmarks/data",
+  "datasets": {
+    "deepset": {
+      "tp": 41,
+      "fp": 2,
+      "tn": 54,
+      "fn": 19,
+      "n_positives": 60,
+      "n_negatives": 56,
+      "detection_rate": 0.6833333333333333,
+      "detection_rate_ci95": [
+        0.5576623297382323,
+        0.7869413244763347
+      ],
+      "fpr": 0.03571428571428571,
+      "fpr_ci95": [
+        0.00984942514823639,
+        0.12118780180490107
+      ],
+      "precision": 0.9534883720930233,
+      "f1": 0.7961165048543688,
+      "n_records": 116,
+      "n_evaluated": 116,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 41
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 2
+        }
+      }
+    },
+    "jackhhao": {
+      "tp": 136,
+      "fp": 4,
+      "tn": 119,
+      "fn": 3,
+      "n_positives": 139,
+      "n_negatives": 123,
+      "detection_rate": 0.9784172661870504,
+      "detection_rate_ci95": [
+        0.9384690385323257,
+        0.992633185556215
+      ],
+      "fpr": 0.032520325203252036,
+      "fpr_ci95": [
+        0.012717758499415699,
+        0.08063861670148349
+      ],
+      "precision": 0.9714285714285714,
+      "f1": 0.974910394265233,
+      "n_records": 262,
+      "n_evaluated": 262,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 48,
+          "heuristic_score": 0,
+          "classifier": 88
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 4
+        }
+      }
+    },
+    "gandalf": {
+      "tp": 110,
+      "fp": 0,
+      "tn": 0,
+      "fn": 2,
+      "n_positives": 112,
+      "n_negatives": 0,
+      "detection_rate": 0.9821428571428571,
+      "detection_rate_ci95": [
+        0.9372195125788385,
+        0.9950891884637512
+      ],
+      "fpr": null,
+      "fpr_ci95": null,
+      "precision": 1.0,
+      "f1": 0.9909909909909909,
+      "n_records": 112,
+      "n_evaluated": 112,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 24,
+          "heuristic_score": 0,
+          "classifier": 86
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 0
+        }
+      }
+    },
+    "safeguard": {
+      "tp": 647,
+      "fp": 12,
+      "tn": 1398,
+      "fn": 3,
+      "n_positives": 650,
+      "n_negatives": 1410,
+      "detection_rate": 0.9953846153846154,
+      "detection_rate_ci95": [
+        0.986519111555763,
+        0.9984291374609868
+      ],
+      "fpr": 0.00851063829787234,
+      "fpr_ci95": [
+        0.004875097731044327,
+        0.014816967915352183
+      ],
+      "precision": 0.9817905918057663,
+      "f1": 0.9885408708938122,
+      "n_records": 2060,
+      "n_evaluated": 2060,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 108,
+          "heuristic_score": 0,
+          "classifier": 539
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 12
+        }
+      }
+    },
+    "combined": {
+      "tp": 934,
+      "fp": 18,
+      "tn": 1571,
+      "fn": 27,
+      "n_positives": 961,
+      "n_negatives": 1589,
+      "detection_rate": 0.9719042663891779,
+      "detection_rate_ci95": [
+        0.9594306556452513,
+        0.980620159655127
+      ],
+      "fpr": 0.011327879169288861,
+      "fpr_ci95": [
+        0.007177345747057552,
+        0.01783547558557645
+      ],
+      "precision": 0.9810924369747899,
+      "f1": 0.9764767381076843,
+      "n_records": 2550,
+      "n_evaluated": 2550,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 180,
+          "heuristic_score": 0,
+          "classifier": 754
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 18
+        }
+      }
+    }
+  },
+  "datasets_with_classifier": {
+    "deepset": {
+      "tp": 41,
+      "fp": 2,
+      "tn": 54,
+      "fn": 19,
+      "n_positives": 60,
+      "n_negatives": 56,
+      "detection_rate": 0.6833333333333333,
+      "detection_rate_ci95": [
+        0.5576623297382323,
+        0.7869413244763347
+      ],
+      "fpr": 0.03571428571428571,
+      "fpr_ci95": [
+        0.00984942514823639,
+        0.12118780180490107
+      ],
+      "precision": 0.9534883720930233,
+      "f1": 0.7961165048543688,
+      "n_records": 116,
+      "n_evaluated": 116,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 41
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 2
+        }
+      }
+    },
+    "jackhhao": {
+      "tp": 136,
+      "fp": 4,
+      "tn": 119,
+      "fn": 3,
+      "n_positives": 139,
+      "n_negatives": 123,
+      "detection_rate": 0.9784172661870504,
+      "detection_rate_ci95": [
+        0.9384690385323257,
+        0.992633185556215
+      ],
+      "fpr": 0.032520325203252036,
+      "fpr_ci95": [
+        0.012717758499415699,
+        0.08063861670148349
+      ],
+      "precision": 0.9714285714285714,
+      "f1": 0.974910394265233,
+      "n_records": 262,
+      "n_evaluated": 262,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 48,
+          "heuristic_score": 0,
+          "classifier": 88
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 4
+        }
+      }
+    },
+    "gandalf": {
+      "tp": 110,
+      "fp": 0,
+      "tn": 0,
+      "fn": 2,
+      "n_positives": 112,
+      "n_negatives": 0,
+      "detection_rate": 0.9821428571428571,
+      "detection_rate_ci95": [
+        0.9372195125788385,
+        0.9950891884637512
+      ],
+      "fpr": null,
+      "fpr_ci95": null,
+      "precision": 1.0,
+      "f1": 0.9909909909909909,
+      "n_records": 112,
+      "n_evaluated": 112,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 24,
+          "heuristic_score": 0,
+          "classifier": 86
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 0
+        }
+      }
+    },
+    "safeguard": {
+      "tp": 647,
+      "fp": 12,
+      "tn": 1398,
+      "fn": 3,
+      "n_positives": 650,
+      "n_negatives": 1410,
+      "detection_rate": 0.9953846153846154,
+      "detection_rate_ci95": [
+        0.986519111555763,
+        0.9984291374609868
+      ],
+      "fpr": 0.00851063829787234,
+      "fpr_ci95": [
+        0.004875097731044327,
+        0.014816967915352183
+      ],
+      "precision": 0.9817905918057663,
+      "f1": 0.9885408708938122,
+      "n_records": 2060,
+      "n_evaluated": 2060,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 108,
+          "heuristic_score": 0,
+          "classifier": 539
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 12
+        }
+      }
+    },
+    "combined": {
+      "tp": 934,
+      "fp": 18,
+      "tn": 1571,
+      "fn": 27,
+      "n_positives": 961,
+      "n_negatives": 1589,
+      "detection_rate": 0.9719042663891779,
+      "detection_rate_ci95": [
+        0.9594306556452513,
+        0.980620159655127
+      ],
+      "fpr": 0.011327879169288861,
+      "fpr_ci95": [
+        0.007177345747057552,
+        0.01783547558557645
+      ],
+      "precision": 0.9810924369747899,
+      "f1": 0.9764767381076843,
+      "n_records": 2550,
+      "n_evaluated": 2550,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 180,
+          "heuristic_score": 0,
+          "classifier": 754
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 18
+        }
+      }
+    }
+  },
+  "datasets_without_classifier": {
+    "deepset": {
+      "tp": 0,
+      "fp": 0,
+      "tn": 56,
+      "fn": 60,
+      "n_positives": 60,
+      "n_negatives": 56,
+      "detection_rate": 0.0,
+      "detection_rate_ci95": [
+        0.0,
+        0.06017185214208986
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.06419393671876342
+      ],
+      "precision": null,
+      "f1": null,
+      "n_records": 116,
+      "n_evaluated": 116,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 0
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 0
+        }
+      }
+    },
+    "jackhhao": {
+      "tp": 48,
+      "fp": 0,
+      "tn": 123,
+      "fn": 91,
+      "n_positives": 139,
+      "n_negatives": 123,
+      "detection_rate": 0.34532374100719426,
+      "detection_rate_ci95": [
+        0.2713990184612785,
+        0.4275679316454339
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.030285514345309572
+      ],
+      "precision": 1.0,
+      "f1": 0.5133689839572193,
+      "n_records": 262,
+      "n_evaluated": 262,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 48,
+          "heuristic_score": 0,
+          "classifier": 0
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 0
+        }
+      }
+    },
+    "gandalf": {
+      "tp": 24,
+      "fp": 0,
+      "tn": 0,
+      "fn": 88,
+      "n_positives": 112,
+      "n_negatives": 0,
+      "detection_rate": 0.21428571428571427,
+      "detection_rate_ci95": [
+        0.14844068354005338,
+        0.29908008621248594
+      ],
+      "fpr": null,
+      "fpr_ci95": null,
+      "precision": 1.0,
+      "f1": 0.35294117647058826,
+      "n_records": 112,
+      "n_evaluated": 112,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 24,
+          "heuristic_score": 0,
+          "classifier": 0
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 0
+        }
+      }
+    },
+    "safeguard": {
+      "tp": 108,
+      "fp": 0,
+      "tn": 1410,
+      "fn": 542,
+      "n_positives": 650,
+      "n_negatives": 1410,
+      "detection_rate": 0.16615384615384615,
+      "detection_rate_ci95": [
+        0.13951737923530003,
+        0.19671314860123815
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        2.168404344971009e-19,
+        0.0027170364801003518
+      ],
+      "precision": 1.0,
+      "f1": 0.2849604221635884,
+      "n_records": 2060,
+      "n_evaluated": 2060,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 108,
+          "heuristic_score": 0,
+          "classifier": 0
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 0
+        }
+      }
+    },
+    "combined": {
+      "tp": 180,
+      "fp": 0,
+      "tn": 1589,
+      "fn": 781,
+      "n_positives": 961,
+      "n_negatives": 1589,
+      "detection_rate": 0.18730489073881373,
+      "detection_rate_ci95": [
+        0.16390008319497926,
+        0.21319965220135215
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0024117019301709156
+      ],
+      "precision": 1.0,
+      "f1": 0.31551270815074495,
+      "n_records": 2550,
+      "n_evaluated": 2550,
+      "skipped_too_long": 0,
+      "errors": 0,
+      "other_blocks": 0,
+      "mechanisms": {
+        "tp": {
+          "regex_injection": 180,
+          "heuristic_score": 0,
+          "classifier": 0
+        },
+        "fp": {
+          "regex_injection": 0,
+          "heuristic_score": 0,
+          "classifier": 0
+        }
+      }
+    }
+  },
+  "threshold_sweep": [
+    {
+      "threshold": 0.25,
+      "tp": 180,
+      "fp": 0,
+      "tn": 1589,
+      "fn": 781,
+      "detection_rate": 0.18730489073881373,
+      "detection_rate_ci95": [
+        0.16390008319497926,
+        0.21319965220135215
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0024117019301709156
+      ]
+    },
+    {
+      "threshold": 0.35,
+      "tp": 180,
+      "fp": 0,
+      "tn": 1589,
+      "fn": 781,
+      "detection_rate": 0.18730489073881373,
+      "detection_rate_ci95": [
+        0.16390008319497926,
+        0.21319965220135215
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0024117019301709156
+      ]
+    },
+    {
+      "threshold": 0.45,
+      "tp": 180,
+      "fp": 0,
+      "tn": 1589,
+      "fn": 781,
+      "detection_rate": 0.18730489073881373,
+      "detection_rate_ci95": [
+        0.16390008319497926,
+        0.21319965220135215
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0024117019301709156
+      ]
+    },
+    {
+      "threshold": 0.55,
+      "tp": 180,
+      "fp": 0,
+      "tn": 1589,
+      "fn": 781,
+      "detection_rate": 0.18730489073881373,
+      "detection_rate_ci95": [
+        0.16390008319497926,
+        0.21319965220135215
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0024117019301709156
+      ]
+    },
+    {
+      "threshold": 0.65,
+      "tp": 180,
+      "fp": 0,
+      "tn": 1589,
+      "fn": 781,
+      "detection_rate": 0.18730489073881373,
+      "detection_rate_ci95": [
+        0.16390008319497926,
+        0.21319965220135215
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.0024117019301709156
+      ]
+    }
+  ],
+  "error_sample": {
+    "file": "benchmarks/results/static_errors_sample.jsonl",
+    "configuration": "with_classifier",
+    "max_per_class": 40,
+    "text_chars": 300,
+    "false_negatives_available": 781,
+    "false_positives_available": 0,
+    "false_negatives_sampled": 40,
+    "false_positives_sampled": 0
+  },
+  "notes": [
+    "Static benchmark on fixed labelled corpora only.",
+    "It does not measure robustness against adaptive attackers; cite published work for adaptive-attack claims.",
+    "Lakera/gandalf_ignore_instructions contains only injection rows, so FPR/precision/F1 are n/a for it.",
+    "Dataset licences are third-party and must be checked on each dataset page."
+  ]
+}

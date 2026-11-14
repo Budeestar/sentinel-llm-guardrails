@@ -1,0 +1,533 @@
+{
+  "benchmark": "sentinel-llm-guardrails learned prompt-injection classifier",
+  "library_version": "0.4.0",
+  "run_date_utc": "2026-11-10T06:14:45Z",
+  "seed": 0,
+  "epochs": 8,
+  "folds": 5,
+  "target_fpr": 0.01,
+  "threshold": 0.3669549336042602,
+  "trained_on": [
+    "codealpaca",
+    "cyber",
+    "deepset",
+    "dolly",
+    "gandalf",
+    "jackhhao",
+    "safeguard"
+  ],
+  "model_path": "src/sentinel_llm_guardrails/models/injection_lr.json",
+  "n_weights": 60000,
+  "dev_rows": 13699,
+  "test_rows": 5323,
+  "skipped_too_long": {},
+  "skip_lodo": false,
+  "data": [
+    {
+      "dataset": "deepset",
+      "dev_rows": 546,
+      "test_rows": 115,
+      "dropped_duplicates": 1
+    },
+    {
+      "dataset": "jackhhao",
+      "dev_rows": 1044,
+      "test_rows": 255,
+      "dropped_duplicates": 7
+    },
+    {
+      "dataset": "gandalf",
+      "dev_rows": 888,
+      "test_rows": 112,
+      "dropped_duplicates": 0
+    },
+    {
+      "dataset": "safeguard",
+      "dev_rows": 8236,
+      "test_rows": 1914,
+      "dropped_duplicates": 146
+    },
+    {
+      "dataset": "codealpaca",
+      "dev_rows": 981,
+      "test_rows": 1019,
+      "dropped_duplicates": 0
+    },
+    {
+      "dataset": "cyber",
+      "dev_rows": 951,
+      "test_rows": 976,
+      "dropped_duplicates": 0
+    },
+    {
+      "dataset": "dolly",
+      "dev_rows": 1053,
+      "test_rows": 932,
+      "dropped_duplicates": 12
+    }
+  ],
+  "test_rows_dropped_as_dev_duplicates": {
+    "deepset": 1,
+    "jackhhao": 7,
+    "safeguard": 146,
+    "dolly": 12
+  },
+  "classifier_alone": {
+    "deepset": {
+      "tp": 41,
+      "fp": 2,
+      "tn": 54,
+      "fn": 18,
+      "n_positives": 59,
+      "n_negatives": 56,
+      "detection_rate": 0.6949152542372882,
+      "detection_rate_ci95": [
+        0.5685367346805482,
+        0.7974636801988394
+      ],
+      "fpr": 0.03571428571428571,
+      "fpr_ci95": [
+        0.00984942514823639,
+        0.12118780180490107
+      ],
+      "precision": 0.9534883720930233,
+      "f1": 0.803921568627451
+    },
+    "jackhhao": {
+      "tp": 130,
+      "fp": 4,
+      "tn": 118,
+      "fn": 3,
+      "n_positives": 133,
+      "n_negatives": 122,
+      "detection_rate": 0.9774436090225563,
+      "detection_rate_ci95": [
+        0.9357817301552714,
+        0.9922995771801787
+      ],
+      "fpr": 0.03278688524590164,
+      "fpr_ci95": [
+        0.012822598471338105,
+        0.08127563379380506
+      ],
+      "precision": 0.9701492537313433,
+      "f1": 0.9737827715355805
+    },
+    "gandalf": {
+      "tp": 110,
+      "fp": 0,
+      "tn": 0,
+      "fn": 2,
+      "n_positives": 112,
+      "n_negatives": 0,
+      "detection_rate": 0.9821428571428571,
+      "detection_rate_ci95": [
+        0.9372195125788385,
+        0.9950891884637512
+      ],
+      "fpr": null,
+      "fpr_ci95": null,
+      "precision": 1.0,
+      "f1": 0.9909909909909909
+    },
+    "safeguard": {
+      "tp": 527,
+      "fp": 12,
+      "tn": 1373,
+      "fn": 2,
+      "n_positives": 529,
+      "n_negatives": 1385,
+      "detection_rate": 0.996219281663516,
+      "detection_rate_ci95": [
+        0.9863211147392217,
+        0.9989625776407796
+      ],
+      "fpr": 0.008664259927797834,
+      "fpr_ci95": [
+        0.004963215250753902,
+        0.015083319682279507
+      ],
+      "precision": 0.9777365491651205,
+      "f1": 0.9868913857677902
+    },
+    "codealpaca": {
+      "tp": 0,
+      "fp": 5,
+      "tn": 1014,
+      "fn": 0,
+      "n_positives": 0,
+      "n_negatives": 1019,
+      "detection_rate": null,
+      "detection_rate_ci95": null,
+      "fpr": 0.004906771344455349,
+      "fpr_ci95": [
+        0.0020976459858889768,
+        0.011434713991631798
+      ],
+      "precision": 0.0,
+      "f1": null
+    },
+    "cyber": {
+      "tp": 0,
+      "fp": 3,
+      "tn": 973,
+      "fn": 0,
+      "n_positives": 0,
+      "n_negatives": 976,
+      "detection_rate": null,
+      "detection_rate_ci95": null,
+      "fpr": 0.0030737704918032786,
+      "fpr_ci95": [
+        0.0010458980671250468,
+        0.008998031725903908
+      ],
+      "precision": 0.0,
+      "f1": null
+    },
+    "dolly": {
+      "tp": 0,
+      "fp": 5,
+      "tn": 927,
+      "fn": 0,
+      "n_positives": 0,
+      "n_negatives": 932,
+      "detection_rate": null,
+      "detection_rate_ci95": null,
+      "fpr": 0.00536480686695279,
+      "fpr_ci95": [
+        0.002293636954401877,
+        0.012496751620749003
+      ],
+      "precision": 0.0,
+      "f1": null
+    },
+    "combined": {
+      "tp": 808,
+      "fp": 31,
+      "tn": 4459,
+      "fn": 25,
+      "n_positives": 833,
+      "n_negatives": 4490,
+      "detection_rate": 0.9699879951980792,
+      "detection_rate_ci95": [
+        0.9560709681367153,
+        0.9795901319997794
+      ],
+      "fpr": 0.0069042316258351895,
+      "fpr_ci95": [
+        0.00486833617037483,
+        0.00978315063084684
+      ],
+      "precision": 0.9630512514898689,
+      "f1": 0.9665071770334928
+    }
+  },
+  "regex_or_classifier": {
+    "deepset": {
+      "tp": 41,
+      "fp": 2,
+      "tn": 54,
+      "fn": 18,
+      "n_positives": 59,
+      "n_negatives": 56,
+      "detection_rate": 0.6949152542372882,
+      "detection_rate_ci95": [
+        0.5685367346805482,
+        0.7974636801988394
+      ],
+      "fpr": 0.03571428571428571,
+      "fpr_ci95": [
+        0.00984942514823639,
+        0.12118780180490107
+      ],
+      "precision": 0.9534883720930233,
+      "f1": 0.803921568627451
+    },
+    "jackhhao": {
+      "tp": 130,
+      "fp": 4,
+      "tn": 118,
+      "fn": 3,
+      "n_positives": 133,
+      "n_negatives": 122,
+      "detection_rate": 0.9774436090225563,
+      "detection_rate_ci95": [
+        0.9357817301552714,
+        0.9922995771801787
+      ],
+      "fpr": 0.03278688524590164,
+      "fpr_ci95": [
+        0.012822598471338105,
+        0.08127563379380506
+      ],
+      "precision": 0.9701492537313433,
+      "f1": 0.9737827715355805
+    },
+    "gandalf": {
+      "tp": 110,
+      "fp": 0,
+      "tn": 0,
+      "fn": 2,
+      "n_positives": 112,
+      "n_negatives": 0,
+      "detection_rate": 0.9821428571428571,
+      "detection_rate_ci95": [
+        0.9372195125788385,
+        0.9950891884637512
+      ],
+      "fpr": null,
+      "fpr_ci95": null,
+      "precision": 1.0,
+      "f1": 0.9909909909909909
+    },
+    "safeguard": {
+      "tp": 527,
+      "fp": 12,
+      "tn": 1373,
+      "fn": 2,
+      "n_positives": 529,
+      "n_negatives": 1385,
+      "detection_rate": 0.996219281663516,
+      "detection_rate_ci95": [
+        0.9863211147392217,
+        0.9989625776407796
+      ],
+      "fpr": 0.008664259927797834,
+      "fpr_ci95": [
+        0.004963215250753902,
+        0.015083319682279507
+      ],
+      "precision": 0.9777365491651205,
+      "f1": 0.9868913857677902
+    },
+    "codealpaca": {
+      "tp": 0,
+      "fp": 5,
+      "tn": 1014,
+      "fn": 0,
+      "n_positives": 0,
+      "n_negatives": 1019,
+      "detection_rate": null,
+      "detection_rate_ci95": null,
+      "fpr": 0.004906771344455349,
+      "fpr_ci95": [
+        0.0020976459858889768,
+        0.011434713991631798
+      ],
+      "precision": 0.0,
+      "f1": null
+    },
+    "cyber": {
+      "tp": 0,
+      "fp": 5,
+      "tn": 971,
+      "fn": 0,
+      "n_positives": 0,
+      "n_negatives": 976,
+      "detection_rate": null,
+      "detection_rate_ci95": null,
+      "fpr": 0.005122950819672131,
+      "fpr_ci95": [
+        0.0021901441840461314,
+        0.01193607868200126
+      ],
+      "precision": 0.0,
+      "f1": null
+    },
+    "dolly": {
+      "tp": 0,
+      "fp": 5,
+      "tn": 927,
+      "fn": 0,
+      "n_positives": 0,
+      "n_negatives": 932,
+      "detection_rate": null,
+      "detection_rate_ci95": null,
+      "fpr": 0.00536480686695279,
+      "fpr_ci95": [
+        0.002293636954401877,
+        0.012496751620749003
+      ],
+      "precision": 0.0,
+      "f1": null
+    },
+    "combined": {
+      "tp": 808,
+      "fp": 33,
+      "tn": 4457,
+      "fn": 25,
+      "n_positives": 833,
+      "n_negatives": 4490,
+      "detection_rate": 0.9699879951980792,
+      "detection_rate_ci95": [
+        0.9560709681367153,
+        0.9795901319997794
+      ],
+      "fpr": 0.0073496659242761695,
+      "fpr_ci95": [
+        0.005238234701707445,
+        0.010303359157507701
+      ],
+      "precision": 0.9607609988109393,
+      "f1": 0.965352449223417
+    }
+  },
+  "leave_one_dataset_out": {
+    "deepset": {
+      "tp": 18,
+      "fp": 0,
+      "tn": 56,
+      "fn": 41,
+      "n_positives": 59,
+      "n_negatives": 56,
+      "detection_rate": 0.3050847457627119,
+      "detection_rate_ci95": [
+        0.2025363198011606,
+        0.4314632653194519
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.06419393671876342
+      ],
+      "precision": 1.0,
+      "f1": 0.4675324675324675,
+      "train_rows": 13153,
+      "test_rows": 115,
+      "threshold": 0.2703065926296584
+    },
+    "jackhhao": {
+      "tp": 127,
+      "fp": 11,
+      "tn": 111,
+      "fn": 6,
+      "n_positives": 133,
+      "n_negatives": 122,
+      "detection_rate": 0.9548872180451128,
+      "detection_rate_ci95": [
+        0.9050721551368458,
+        0.9791627912221265
+      ],
+      "fpr": 0.09016393442622951,
+      "fpr_ci95": [
+        0.051092543842606385,
+        0.15425678270576482
+      ],
+      "precision": 0.9202898550724637,
+      "f1": 0.937269372693727,
+      "train_rows": 12655,
+      "test_rows": 255,
+      "threshold": 0.38204043584850883
+    },
+    "gandalf": {
+      "tp": 102,
+      "fp": 0,
+      "tn": 0,
+      "fn": 10,
+      "n_positives": 112,
+      "n_negatives": 0,
+      "detection_rate": 0.9107142857142857,
+      "detection_rate_ci95": [
+        0.8434104235612726,
+        0.950778469919452
+      ],
+      "fpr": null,
+      "fpr_ci95": null,
+      "precision": 1.0,
+      "f1": 0.9532710280373832,
+      "train_rows": 12811,
+      "test_rows": 112,
+      "threshold": 0.36006172431398514
+    },
+    "safeguard": {
+      "tp": 355,
+      "fp": 88,
+      "tn": 1297,
+      "fn": 174,
+      "n_positives": 529,
+      "n_negatives": 1385,
+      "detection_rate": 0.6710775047258979,
+      "detection_rate_ci95": [
+        0.6299334095771998,
+        0.7097548729385721
+      ],
+      "fpr": 0.06353790613718412,
+      "fpr_ci95": [
+        0.05185973959884704,
+        0.077630532799417
+      ],
+      "precision": 0.801354401805869,
+      "f1": 0.7304526748971194,
+      "train_rows": 5463,
+      "test_rows": 1914,
+      "threshold": 0.48189127933523623
+    },
+    "codealpaca": {
+      "tp": 0,
+      "fp": 26,
+      "tn": 993,
+      "fn": 0,
+      "n_positives": 0,
+      "n_negatives": 1019,
+      "detection_rate": null,
+      "detection_rate_ci95": null,
+      "fpr": 0.02551521099116781,
+      "fpr_ci95": [
+        0.017470862279091542,
+        0.03712357984009833
+      ],
+      "precision": 0.0,
+      "f1": null,
+      "train_rows": 12718,
+      "test_rows": 1019,
+      "threshold": 0.4083207783618612
+    },
+    "cyber": {
+      "tp": 0,
+      "fp": 60,
+      "tn": 916,
+      "fn": 0,
+      "n_positives": 0,
+      "n_negatives": 976,
+      "detection_rate": null,
+      "detection_rate_ci95": null,
+      "fpr": 0.06147540983606557,
+      "fpr_ci95": [
+        0.048056838217771194,
+        0.0783324441562832
+      ],
+      "precision": 0.0,
+      "f1": null,
+      "train_rows": 12748,
+      "test_rows": 976,
+      "threshold": 0.3729085565625193
+    },
+    "dolly": {
+      "tp": 0,
+      "fp": 3,
+      "tn": 929,
+      "fn": 0,
+      "n_positives": 0,
+      "n_negatives": 932,
+      "detection_rate": null,
+      "detection_rate_ci95": null,
+      "fpr": 0.003218884120171674,
+      "fpr_ci95": [
+        0.001095301893296481,
+        0.009420858432722733
+      ],
+      "precision": 0.0,
+      "f1": null,
+      "train_rows": 12646,
+      "test_rows": 932,
+      "threshold": 0.384801805180646
+    }
+  },
+  "notes": [
+    "Test rows are never used for training, model selection or threshold selection.",
+    "The threshold is the lowest out-of-fold threshold whose FPR on benign dev rows is <= --target-fpr.",
+    "LODO trains on the other datasets' dev rows only; it is a generalization check, not a production model.",
+    "These numbers come from fixed public corpora and say nothing about robustness against adaptive attackers.",
+    "Dataset licences are third-party and must be checked on each dataset page."
+  ]
+}

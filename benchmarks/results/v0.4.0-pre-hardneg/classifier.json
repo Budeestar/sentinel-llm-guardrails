@@ -1,0 +1,349 @@
+{
+  "benchmark": "sentinel-llm-guardrails learned prompt-injection classifier",
+  "library_version": "0.4.0",
+  "run_date_utc": "2026-11-10T02:25:20Z",
+  "seed": 0,
+  "epochs": 8,
+  "folds": 5,
+  "target_fpr": 0.01,
+  "threshold": 0.42674791214934343,
+  "trained_on": [
+    "deepset",
+    "gandalf",
+    "jackhhao",
+    "safeguard"
+  ],
+  "model_path": "src/sentinel_llm_guardrails/models/injection_lr.json",
+  "n_weights": 60000,
+  "dev_rows": 10714,
+  "test_rows": 2397,
+  "skipped_too_long": {},
+  "skip_lodo": false,
+  "data": [
+    {
+      "dataset": "deepset",
+      "dev_rows": 546,
+      "test_rows": 115,
+      "dropped_duplicates": 1
+    },
+    {
+      "dataset": "jackhhao",
+      "dev_rows": 1044,
+      "test_rows": 255,
+      "dropped_duplicates": 7
+    },
+    {
+      "dataset": "gandalf",
+      "dev_rows": 888,
+      "test_rows": 112,
+      "dropped_duplicates": 0
+    },
+    {
+      "dataset": "safeguard",
+      "dev_rows": 8236,
+      "test_rows": 1915,
+      "dropped_duplicates": 145
+    }
+  ],
+  "test_rows_dropped_as_dev_duplicates": {
+    "deepset": 1,
+    "jackhhao": 7,
+    "safeguard": 145
+  },
+  "classifier_alone": {
+    "deepset": {
+      "tp": 44,
+      "fp": 3,
+      "tn": 53,
+      "fn": 15,
+      "n_positives": 59,
+      "n_negatives": 56,
+      "detection_rate": 0.7457627118644068,
+      "detection_rate_ci95": [
+        0.6220385597107273,
+        0.839440224267631
+      ],
+      "fpr": 0.05357142857142857,
+      "fpr_ci95": [
+        0.018385781382109126,
+        0.14607309068821533
+      ],
+      "precision": 0.9361702127659575,
+      "f1": 0.8301886792452831
+    },
+    "jackhhao": {
+      "tp": 131,
+      "fp": 4,
+      "tn": 118,
+      "fn": 2,
+      "n_positives": 133,
+      "n_negatives": 122,
+      "detection_rate": 0.9849624060150376,
+      "detection_rate_ci95": [
+        0.9468303454594498,
+        0.9958664155348265
+      ],
+      "fpr": 0.03278688524590164,
+      "fpr_ci95": [
+        0.012822598471338105,
+        0.08127563379380506
+      ],
+      "precision": 0.9703703703703703,
+      "f1": 0.9776119402985074
+    },
+    "gandalf": {
+      "tp": 111,
+      "fp": 0,
+      "tn": 0,
+      "fn": 1,
+      "n_positives": 112,
+      "n_negatives": 0,
+      "detection_rate": 0.9910714285714286,
+      "detection_rate_ci95": [
+        0.9511515316911152,
+        0.9984221452967079
+      ],
+      "fpr": null,
+      "fpr_ci95": null,
+      "precision": 1.0,
+      "f1": 0.9955156950672646
+    },
+    "safeguard": {
+      "tp": 527,
+      "fp": 19,
+      "tn": 1367,
+      "fn": 2,
+      "n_positives": 529,
+      "n_negatives": 1386,
+      "detection_rate": 0.996219281663516,
+      "detection_rate_ci95": [
+        0.9863211147392217,
+        0.9989625776407796
+      ],
+      "fpr": 0.013708513708513708,
+      "fpr_ci95": [
+        0.008793458372604984,
+        0.021311744314467945
+      ],
+      "precision": 0.9652014652014652,
+      "f1": 0.9804651162790696
+    },
+    "combined": {
+      "tp": 813,
+      "fp": 26,
+      "tn": 1538,
+      "fn": 20,
+      "n_positives": 833,
+      "n_negatives": 1564,
+      "detection_rate": 0.9759903961584634,
+      "detection_rate_ci95": [
+        0.9632062310682735,
+        0.9844045638336939
+      ],
+      "fpr": 0.016624040920716114,
+      "fpr_ci95": [
+        0.011369671143718287,
+        0.024247105352737677
+      ],
+      "precision": 0.9690107270560191,
+      "f1": 0.972488038277512
+    }
+  },
+  "regex_or_classifier": {
+    "deepset": {
+      "tp": 44,
+      "fp": 3,
+      "tn": 53,
+      "fn": 15,
+      "n_positives": 59,
+      "n_negatives": 56,
+      "detection_rate": 0.7457627118644068,
+      "detection_rate_ci95": [
+        0.6220385597107273,
+        0.839440224267631
+      ],
+      "fpr": 0.05357142857142857,
+      "fpr_ci95": [
+        0.018385781382109126,
+        0.14607309068821533
+      ],
+      "precision": 0.9361702127659575,
+      "f1": 0.8301886792452831
+    },
+    "jackhhao": {
+      "tp": 131,
+      "fp": 4,
+      "tn": 118,
+      "fn": 2,
+      "n_positives": 133,
+      "n_negatives": 122,
+      "detection_rate": 0.9849624060150376,
+      "detection_rate_ci95": [
+        0.9468303454594498,
+        0.9958664155348265
+      ],
+      "fpr": 0.03278688524590164,
+      "fpr_ci95": [
+        0.012822598471338105,
+        0.08127563379380506
+      ],
+      "precision": 0.9703703703703703,
+      "f1": 0.9776119402985074
+    },
+    "gandalf": {
+      "tp": 111,
+      "fp": 0,
+      "tn": 0,
+      "fn": 1,
+      "n_positives": 112,
+      "n_negatives": 0,
+      "detection_rate": 0.9910714285714286,
+      "detection_rate_ci95": [
+        0.9511515316911152,
+        0.9984221452967079
+      ],
+      "fpr": null,
+      "fpr_ci95": null,
+      "precision": 1.0,
+      "f1": 0.9955156950672646
+    },
+    "safeguard": {
+      "tp": 527,
+      "fp": 19,
+      "tn": 1367,
+      "fn": 2,
+      "n_positives": 529,
+      "n_negatives": 1386,
+      "detection_rate": 0.996219281663516,
+      "detection_rate_ci95": [
+        0.9863211147392217,
+        0.9989625776407796
+      ],
+      "fpr": 0.013708513708513708,
+      "fpr_ci95": [
+        0.008793458372604984,
+        0.021311744314467945
+      ],
+      "precision": 0.9652014652014652,
+      "f1": 0.9804651162790696
+    },
+    "combined": {
+      "tp": 813,
+      "fp": 26,
+      "tn": 1538,
+      "fn": 20,
+      "n_positives": 833,
+      "n_negatives": 1564,
+      "detection_rate": 0.9759903961584634,
+      "detection_rate_ci95": [
+        0.9632062310682735,
+        0.9844045638336939
+      ],
+      "fpr": 0.016624040920716114,
+      "fpr_ci95": [
+        0.011369671143718287,
+        0.024247105352737677
+      ],
+      "precision": 0.9690107270560191,
+      "f1": 0.972488038277512
+    }
+  },
+  "leave_one_dataset_out": {
+    "deepset": {
+      "tp": 17,
+      "fp": 0,
+      "tn": 56,
+      "fn": 42,
+      "n_positives": 59,
+      "n_negatives": 56,
+      "detection_rate": 0.288135593220339,
+      "detection_rate_ci95": [
+        0.188364996358223,
+        0.4138084657293992
+      ],
+      "fpr": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.06419393671876342
+      ],
+      "precision": 1.0,
+      "f1": 0.4473684210526315,
+      "train_rows": 10168,
+      "test_rows": 115,
+      "threshold": 0.3211846454789304
+    },
+    "jackhhao": {
+      "tp": 131,
+      "fp": 26,
+      "tn": 96,
+      "fn": 2,
+      "n_positives": 133,
+      "n_negatives": 122,
+      "detection_rate": 0.9849624060150376,
+      "detection_rate_ci95": [
+        0.9468303454594498,
+        0.9958664155348265
+      ],
+      "fpr": 0.21311475409836064,
+      "fpr_ci95": [
+        0.14979010202777848,
+        0.29395442655608134
+      ],
+      "precision": 0.8343949044585988,
+      "f1": 0.903448275862069,
+      "train_rows": 9670,
+      "test_rows": 255,
+      "threshold": 0.3511352536879774
+    },
+    "gandalf": {
+      "tp": 104,
+      "fp": 0,
+      "tn": 0,
+      "fn": 8,
+      "n_positives": 112,
+      "n_negatives": 0,
+      "detection_rate": 0.9285714285714286,
+      "detection_rate_ci95": [
+        0.8653547472690817,
+        0.9633640981021094
+      ],
+      "fpr": null,
+      "fpr_ci95": null,
+      "precision": 1.0,
+      "f1": 0.962962962962963,
+      "train_rows": 9826,
+      "test_rows": 112,
+      "threshold": 0.4384226860860143
+    },
+    "safeguard": {
+      "tp": 295,
+      "fp": 29,
+      "tn": 1357,
+      "fn": 234,
+      "n_positives": 529,
+      "n_negatives": 1386,
+      "detection_rate": 0.55765595463138,
+      "detection_rate_ci95": [
+        0.5150673925531967,
+        0.5994131888471464
+      ],
+      "fpr": 0.020923520923520924,
+      "fpr_ci95": [
+        0.01460731428505529,
+        0.029888018925948306
+      ],
+      "precision": 0.9104938271604939,
+      "f1": 0.6916764361078546,
+      "train_rows": 2478,
+      "test_rows": 1915,
+      "threshold": 0.5549141734711828
+    }
+  },
+  "notes": [
+    "Test rows are never used for training, model selection or threshold selection.",
+    "The threshold is the lowest out-of-fold threshold whose FPR on benign dev rows is <= --target-fpr.",
+    "LODO trains on the other datasets' dev rows only; it is a generalization check, not a production model.",
+    "These numbers come from fixed public corpora and say nothing about robustness against adaptive attackers.",
+    "Dataset licences are third-party and must be checked on each dataset page."
+  ]
+}

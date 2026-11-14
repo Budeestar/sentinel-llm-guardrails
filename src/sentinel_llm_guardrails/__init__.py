@@ -12,6 +12,7 @@ from .guardrails import (
     _luhn_ok,
     normalize_for_detection,
 )
+from .classifier import InjectionClassifier, calibrate_threshold, featurize
 from .telemetry import (
     AUDIT_ENABLED,
     DEFAULT_BREACH_POLICY,
@@ -24,16 +25,19 @@ from .telemetry import (
     safe_tenant_id,
 )
 
-__version__ = "0.3.1"
+__version__ = "0.4.0"
 __all__ = [
     "GuardrailResult",
     "HeuristicInjectionScorer",
+    "InjectionClassifier",
+    "calibrate_threshold",
     "LLMGuardrails",
     "LLMGuardrailsService",
     "MAX_INPUT_CHARS",
     "MAX_OUTPUT_CHARS",
     "DEFAULT_INJECTION_SCORE_THRESHOLD",
     "normalize_for_detection",
+    "featurize",
     "_luhn_ok",
     "_credit_card_match",
     "__version__",
